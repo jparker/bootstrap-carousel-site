@@ -1,13 +1,8 @@
-require 'erb'
+task :default => :build
 
 desc 'Build html files'
-task :default do
-  Dir['*.erb'].each do |input|
-    output = input.sub(/\.erb\Z/, '.html')
-    File.unlink output if File.exists? output
-    File.open(output, 'w') do |f|
-      f.write ERB.new(File.read(input), nil, '-').result
-      f.chmod 0444
-    end
-  end
+task :build => %w[index.html]
+
+rule '.html' => '.erb' do |t|
+  sh "erb -T - #{t.source}"
 end
