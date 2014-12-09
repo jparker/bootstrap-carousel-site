@@ -5,11 +5,7 @@
 <body>
 <div class="container">
   <div id="x" class="carousel slide">
-    <div class="carousel-inner">
-      <% Dir['**/*.jpg'].shuffle.each.with_index do |file, n| -%>
-        <div class="item<%= n.zero? ? ' active' : '' %>"><img src="<%= file %>" /></div>
-      <% end -%>
-    </div>
+    <div class="carousel-inner"></div>
     <a class="carousel-control left" href="#x" data-slide="prev">&lsaquo;</a>
     <a class="carousel-control right" href="#x" data-slide="next">&rsaquo;</a>
   </div>
@@ -17,10 +13,25 @@
 <script src="jquery-1.9.0.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script lang="javascript">
-  $(function() {
-    $('.carousel').carousel({
-      interval: 3000
-    });
+  Array.prototype.shuffle = function () {
+    for (var i, tmp, n = this.length; n--; i = Math.floor(Math.random() * n), tmp = this[i], this[i] = this[n], this[n] = tmp);
+    return this;
+  }
+
+  var images = <%= Dir['**/*.jpg'].to_json %>.shuffle();
+
+  for (var i = 0; i < images.length; i++) {
+    div = $('<div/>').addClass('item');
+    if (i == 0) {
+      div.addClass('active');
+    }
+    img = $('<img/>').attr('src', images[i]);
+    img.appendTo(div)
+    div.appendTo($('.carousel-inner'));
+  }
+
+  $('.carousel').carousel({
+    interval: 3000
   });
 </script>
 </body>

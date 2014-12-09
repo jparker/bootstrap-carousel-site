@@ -12,5 +12,5 @@ desc 'Rebuild html files'
 task :rebuild => [:clobber, :build]
 
 rule '.html' => '.erb' do |t|
-  sh "erb -T - #{t.source} > #{t.name}"
+  sh "bundle exec erb -r json -T - #{t.source} > #{t.name}"
 end
