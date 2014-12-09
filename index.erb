@@ -18,17 +18,15 @@
     return this;
   }
 
-  var images = <%= Dir['**/*.jpg'].to_json %>.shuffle();
+  var images = <%= Dir['**/*.jpg'].to_json %>;
 
-  for (var i = 0; i < images.length; i++) {
-    div = $('<div/>').addClass('item');
-    if (i == 0) {
-      div.addClass('active');
-    }
-    img = $('<img/>').attr('src', images[i]);
-    img.appendTo(div)
-    div.appendTo($('.carousel-inner'));
-  }
+  $.each(images.shuffle(), function(i, img) {
+    $('<div/>')
+      .addClass('item')
+      .toggleClass('active', i == 0)
+      .append($('<img/>').attr('src', img))
+      .appendTo($('.carousel-inner'));
+  })
 
   $('.carousel').carousel({
     interval: 3000
