@@ -18,7 +18,7 @@
     return this;
   }
 
-  var images = <%= Dir['**/*.jpg'].to_json %>;
+  var images = <%= Dir['images/**/*.*'].to_json %>;
 
   $.each(images.shuffle(), function(i, img) {
     $('<div/>')
