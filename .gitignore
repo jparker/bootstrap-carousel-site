@@ -1,4 +1,6 @@
 *.html
 *.jpg
 *.png
+*.gif
 .bundle/
+Gemfile.lock
